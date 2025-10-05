@@ -26,9 +26,14 @@ user_instruction = st.text_area(
 )
 st.markdown("---")
 
-intent = st.selectbox("🎯 Email intent", ["Follow-up", "Apology", "Meeting request"])
-tone = st.selectbox("🎨 Tone", ["Professional", "Friendly", "Casual"])
-role = st.selectbox("🧑‍💼 Role", ["Sales Manager", "Technical Support", "Friendly Peer"])
+intent = st.selectbox("🎯 Email intent", ["Follow-up", "Apology", "Meeting Request", "Appreciation", "Complaint",
+        "Reminder", "Update", "Introduction", "Feedback Request",
+        "Announcement", "Resignation", "Offer / Proposal"])
+tone = st.selectbox("🎨 Tone", ["Professional", "Friendly", "Casual", "Empathetic", "Persuasive",
+        "Confident", "Apologetic", "Encouraging", "Urgent"])
+role = st.selectbox("🧑‍💼 Role", ["Student", "Sales Manager", "Technical Support", "HR Executive",
+        "Team Lead", "Developer", "Marketing Specialist",
+        "Friendly Peer", "Customer Service Agent", "Recruiter"])
 
 
 if "subject" not in st.session_state:
@@ -37,8 +42,24 @@ if "body" not in st.session_state:
     st.session_state.body = ""
 
 
+
 # --- Email generation logic ---
 def generate_email():
+    role_guidance = {
+    "Student": "Be respectful and concise when addressing professors or deans.",
+    "Sales Manager": "Focus on persuasion and maintaining client relationships.",
+    "Technical Support": "Be clear, detailed, and reassuring.",
+    "HR Executive": "Be empathetic and professional.",
+    "Team Lead": "Be confident, direct, and motivating.",
+    "Developer": "Focus on precision and clarity.",
+    "Marketing Specialist": "Be creative, positive, and engaging.",
+    "Friendly Peer": "Use a casual, warm, and friendly tone.",
+    "Customer Service Agent": "Be polite, apologetic, and solution-oriented.",
+    "Recruiter": "Be welcoming, professional, and encouraging."
+}
+    
+    role_instruction = role_guidance.get(role, "")
+    
     system_prompt =f"""
        You are an expert AI email assistant that writes complete, well-structured, 
         and contextually accurate professional emails. 
@@ -49,14 +70,17 @@ def generate_email():
 
     user_prompt = f"""
 
-### USER INSTRUCTION
-{user_instruction if user_instruction.strip() else "No direct instruction provided."}
+    ### USER INSTRUCTION
+    {user_instruction if user_instruction.strip() else "No direct instruction provided."}
 
 ### STRUCTURED DETAILS
 - Role: {role}
 - Intent: {intent}
 - Recipient: {recipient_name}
 - Tone: {tone}
+    
+    ### ROLE GUIDANCE
+    {role_instruction}
 
 ### TASK
 Write a complete email that fulfills the user’s intent while reflecting their tone and role.
