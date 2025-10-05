@@ -124,7 +124,7 @@ Then open → http://localhost:8501
 
 ### 🎥 Demo
 
-👉 YouTube: Smart Email Generator (3-min Demo)
+👉 YouTube: [Smart Email Generator (3-min Demo)](https://lnkd.in/dCXJY-sF)
 
 ---
 
@@ -159,4 +159,5 @@ Smart Email Generator helps students, employees, and professionals communicate m
 
 • [LinkedIn](https://linkedin.com/in/ankitanand-ai)
 • [X](https://x.com/Ank17_Developer)
+
 
